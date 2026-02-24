@@ -5,7 +5,7 @@ import com.example.assignment.service.DeviceService;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/device")
 public class DeviceController {
 
     private final DeviceService deviceService;
@@ -14,8 +14,9 @@ public class DeviceController {
         this.deviceService = deviceService;
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public String createDevice(@RequestBody Device device){
+
         return deviceService.createDevice(device);
     }
 }

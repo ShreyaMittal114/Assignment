@@ -3,13 +3,13 @@ package com.example.assignment.model;
 public class Device {
 
 
-    private String id;
+    private Long id;
 
-    public String getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(String id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -22,27 +22,27 @@ public class Device {
     }
 
     public String getPartNumber() {
-        return PartNumber;
+        return partNumber;
     }
 
     public void setPartNumber(String partNumber) {
-        PartNumber = partNumber;
+        partNumber = partNumber;
     }
 
     public String getBuildingName() {
-        return BuildingName;
+        return buildingName;
     }
 
     public void setBuildingName(String buildingName) {
-        BuildingName = buildingName;
+        buildingName = buildingName;
     }
 
     public String getDeviceType() {
-        return DeviceType;
+        return deviceType;
     }
 
     public void setDeviceType(String deviceType) {
-        DeviceType = deviceType;
+        deviceType = deviceType;
     }
 
     public Long getNoOfShelfPositions() {
@@ -54,19 +54,19 @@ public class Device {
     }
 
     private String name;
-    private String PartNumber ;
+    private String partNumber ;
 
-    public Device(String id, String name, String partNumber, String buildingName, String deviceType, Long noOfShelfPositions) {
+    public Device(Long id, String name, String partNumber, String buildingName, String deviceType, Long noOfShelfPositions) {
         this.id = id;
         this.name = name;
-        PartNumber = partNumber;
-        BuildingName = buildingName;
-        DeviceType = deviceType;
+        this.partNumber = partNumber;
+       this.buildingName = buildingName;
+        this.deviceType = deviceType;
         this.noOfShelfPositions = noOfShelfPositions;
     }
   public Device(){}
-    private String BuildingName;
-    private String DeviceType;
+    private String buildingName;
+    private String deviceType;
     private Long noOfShelfPositions ;
 
 
