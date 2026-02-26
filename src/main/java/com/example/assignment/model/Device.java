@@ -3,13 +3,13 @@ package com.example.assignment.model;
 public class Device {
 
 
-    private Long id;
+    private String id;
 
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
@@ -26,7 +26,7 @@ public class Device {
     }
 
     public void setPartNumber(String partNumber) {
-        partNumber = partNumber;
+        this.partNumber = partNumber;
     }
 
     public String getBuildingName() {
@@ -34,7 +34,7 @@ public class Device {
     }
 
     public void setBuildingName(String buildingName) {
-        buildingName = buildingName;
+        this.buildingName = buildingName;
     }
 
     public String getDeviceType() {
@@ -42,7 +42,7 @@ public class Device {
     }
 
     public void setDeviceType(String deviceType) {
-        deviceType = deviceType;
+        this.deviceType = deviceType;
     }
 
     public Long getNoOfShelfPositions() {
@@ -56,7 +56,7 @@ public class Device {
     private String name;
     private String partNumber ;
 
-    public Device(Long id, String name, String partNumber, String buildingName, String deviceType, Long noOfShelfPositions) {
+    public Device(String id, String name, String partNumber, String buildingName, String deviceType, Long noOfShelfPositions) {
         this.id = id;
         this.name = name;
         this.partNumber = partNumber;
@@ -64,10 +64,12 @@ public class Device {
         this.deviceType = deviceType;
         this.noOfShelfPositions = noOfShelfPositions;
     }
-  public Device(){}
+
     private String buildingName;
     private String deviceType;
     private Long noOfShelfPositions ;
+
+    public Device(){}
 
 
 }
