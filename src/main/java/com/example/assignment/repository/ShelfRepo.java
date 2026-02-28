@@ -59,8 +59,8 @@ AND sp.Occupied = false
  
 CREATE (sp)-[:HAS_SHELF]->(s)
  
-SET s.Occupied = true,
-    sp.Occupied = true
+SET s.Occupied = true
+ SET sp.Occupied = true
  
 RETURN elementId(s) AS shelfId,
        elementId(sp) AS shelfPositionId""";

@@ -31,15 +31,15 @@ public class ShelfPosition {
         return Deleted;
     }
 
-    public void setDeleted(boolean deleted) {
-        this.Deleted = deleted;
+    public void setDeleted(boolean Deleted) {
+        this.Deleted = Deleted;
     }
 
     public boolean getOccupied() {
         return Occupied;
     }
 
-    public void setOccupied(boolean occupied) {
-        this.Occupied = occupied;
+    public void setOccupied(boolean Occupied) {
+        this.Occupied = Occupied;
     }
 }

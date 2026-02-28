@@ -20,8 +20,8 @@ public class Shelf {
         return Occupied;
     }
 
-    public void setOccupied(Boolean occupied) {
-        this.Occupied = occupied;
+    public void setOccupied(Boolean Occupied) {
+        this.Occupied = Occupied;
     }
 
     public Shelf(){
@@ -56,7 +56,7 @@ public class Shelf {
         return Deleted;
     }
 
-    public void setDeleted(Boolean isdeleted) {
-        this.Deleted = isdeleted;
+    public void setDeleted(Boolean Deleted) {
+        this.Deleted = Deleted;
     }
 }

@@ -75,6 +75,7 @@ public class DeviceRepo {
                 device.setBuildingName(node.get("buildingName").asString());
                 device.setDeviceType(node.get("deviceType").asString());
                 device.setNoOfShelfPositions(node.get("noOfShelfPositions").asLong());
+                device.setDeleted(node.get("Deleted").asBoolean(false));
                 return device;
             });
 
@@ -105,6 +106,7 @@ public class DeviceRepo {
                     device.setBuildingName(node.get("buildingName").asString());
                     device.setDeviceType(node.get("deviceType").asString());
                     device.setNoOfShelfPositions(node.get("noOfShelfPositions").asLong());
+                    device.setDeleted(node.get("Deleted").asBoolean(false));
                     devices.add(device);
                 }
                 return devices;
@@ -198,6 +200,7 @@ public class DeviceRepo {
                     device.setBuildingName(node.get("buildingName").asString());
                     device.setDeviceType(node.get("deviceType").asString());
                     device.setNoOfShelfPositions(node.get("noOfShelfPositions").asLong());
+                    device.setDeleted(node.get("Deleted").asBoolean(false));
 
                     devices.add(device);
                 }
@@ -212,14 +215,15 @@ public class DeviceRepo {
         String query = """
                 MATCH (d:Device)
 WHERE elementId(d) = $deviceId
-AND d.isDeleted = false
+AND d.Deleted = false
  
 OPTIONAL MATCH (d)-[r1:HAS_ShelfPosition]->(sp:ShelfPosition)
-OPTIONAL MATCH (sp)-[r2:HAS_Shelf]->(s:Shelf)
+OPTIONAL MATCH (sp)-[r2:HAS_SHELF]->(s:Shelf)
  
 SET d.Deleted = true
 SET sp.Deleted = true
 SET s.Occupied = false
+SET sp.Occupied = false
 DELETE r2
 RETURN d""";
 
