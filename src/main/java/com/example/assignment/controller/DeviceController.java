@@ -53,11 +53,16 @@ public class DeviceController {
         return deviceService.updateDevice(id,device);
     }
 
-    @GetMapping("/{deviceId}/shelves")
-    public List<ShelfPosition>getShelvesByDeviceId(@PathVariable String deviceId){
-        return shelfPositionService.getShelvesByDeviceId(deviceId);
+    @GetMapping("/{deviceId}/shelfPosition")
+    public List<ShelfPosition>getShelvesPositionByDeviceId(@PathVariable String deviceId){
+        return shelfPositionService.getShelvesPositionByDeviceId(deviceId);
 
     }
+    @DeleteMapping("/{deviceId}")
+    public String deleteDevice(@PathVariable String deviceId){
+        return deviceService.deleteDevice(deviceId);
+    }
+
 
 
 

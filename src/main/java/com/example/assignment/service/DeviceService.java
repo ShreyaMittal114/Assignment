@@ -46,4 +46,8 @@ public class DeviceService {
     public List<Device> searchDevices(String name, String type,String buildingName) {
         return deviceRepo. searchDevices(name,type,buildingName);
     }
+
+    public String deleteDevice(String deviceId) {
+        return deviceRepo.deleteDevice(deviceId);
+    }
 }

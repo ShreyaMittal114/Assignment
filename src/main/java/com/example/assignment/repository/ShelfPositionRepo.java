@@ -25,14 +25,14 @@ public class ShelfPositionRepo {
     public List<String> createShelves(String deviceId, Long count){
         String query = """
                 MATCH(d:Device)
-                WHERE elementId(d) = $deviceId
-                CREATE (d)-[:HAS_SHELF]->(s:ShelfPosition {
-                isOccupied:false,
-                isDeleted:false
+                WHERE elementId(d) = $deviceId AND d.Deleted=false
+                CREATE (d)-[:HAS_ShelfPosition]->(s:ShelfPosition {
+                Occupied:false,
+                Deleted:false
   })
-              RETURN elementId(s) AS shelfId
+              RETURN elementId(s) AS shelfPositionId
                 """;
-        List<String> shelfIds = new ArrayList<>();
+        List<String> shelfPositionIds = new ArrayList<>();
 
         try (Session session = driver.session()) {
 
@@ -43,26 +43,27 @@ public class ShelfPositionRepo {
                     Result result = tx.run(query,
                             Values.parameters("deviceId", deviceId));
 
-                    String shelfId = result
+                    String shelfPositionId = result
                             .single()
-                            .get("shelfId")
+                            .get("shelfPositionId")
                             .asString();
 
-                    shelfIds.add(shelfId);
+                    shelfPositionIds.add(shelfPositionId);
                 }
 
                 return null;
             });
         }
 
-        return shelfIds;
+        return shelfPositionIds;
     }
 
-    public List<ShelfPosition> getShelvesByDeviceId(String deviceId) {
+    public List<ShelfPosition> getShelvesPositionByDeviceId(String deviceId) {
         String query = """
-        MATCH (d:Device)-[:HAS_SHELF]->(s:ShelfPosition)
+        MATCH (d:Device)-[:HAS_ShelfPosition]->(s:ShelfPosition)
         WHERE elementId(d) = $deviceId
-        AND s.isDeleted = false
+        AND d.Deleted=false
+        AND s.Deleted = false
         RETURN s
     """;
 
@@ -82,8 +83,8 @@ public class ShelfPositionRepo {
                     ShelfPosition shelfPosition = new ShelfPosition();
                     shelfPosition.setPositionId(node.elementId());
 
-                    shelfPosition.setisOccupied(node.get("isOccupied").asBoolean());
-                    shelfPosition.setisDeleted(node.get("isDeleted").asBoolean());
+                    shelfPosition.setOccupied(node.get("Occupied").asBoolean());
+                    shelfPosition.setDeleted(node.get("Deleted").asBoolean());
 
                     shelfPositions.add(shelfPosition);
                 }

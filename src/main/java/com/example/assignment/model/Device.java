@@ -56,18 +56,30 @@ public class Device {
     private String name;
     private String partNumber ;
 
-    public Device(String id, String name, String partNumber, String buildingName, String deviceType, Long noOfShelfPositions) {
-        this.id = id;
-        this.name = name;
-        this.partNumber = partNumber;
-       this.buildingName = buildingName;
-        this.deviceType = deviceType;
-        this.noOfShelfPositions = noOfShelfPositions;
-    }
+
 
     private String buildingName;
     private String deviceType;
     private Long noOfShelfPositions ;
+    private Boolean Deleted;
+
+    public Device(String id, String name, String partNumber, String buildingName, String deviceType, Long noOfShelfPositions, Boolean Deleted) {
+        this.id = id;
+        this.name = name;
+        this.partNumber = partNumber;
+        this.buildingName = buildingName;
+        this.deviceType = deviceType;
+        this.noOfShelfPositions = noOfShelfPositions;
+        this.Deleted = Deleted;
+    }
+
+    public Boolean getDeleted() {
+        return Deleted;
+    }
+
+    public void setDeleted(Boolean deleted) {
+        this.Deleted = deleted;
+    }
 
     public Device(){}
 

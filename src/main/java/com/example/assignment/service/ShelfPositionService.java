@@ -15,7 +15,7 @@ public class ShelfPositionService {
         this.shelfPositionRepo = shelfPositionRepo;
     }
 
-    public List<ShelfPosition> getShelvesByDeviceId(String deviceId) {
-        return shelfPositionRepo.getShelvesByDeviceId(deviceId);
+    public List<ShelfPosition> getShelvesPositionByDeviceId(String deviceId) {
+        return shelfPositionRepo.getShelvesPositionByDeviceId(deviceId);
     }
 }

@@ -3,14 +3,14 @@ package com.example.assignment.model;
 public class ShelfPosition {
 
     String positionId;
-    boolean isDeleted;
-    boolean isOccupied;
+    boolean Deleted;
+    boolean Occupied;
 
-    public ShelfPosition( String positionId, boolean isDeleted, boolean isOccupied) {
+    public ShelfPosition( String positionId, boolean Deleted, boolean Occupied) {
 
         this.positionId = positionId;
-        this.isDeleted = isDeleted;
-        this.isOccupied = isOccupied;
+        this.Deleted = Deleted;
+        this.Occupied = Occupied;
     }
 
     public ShelfPosition() {
@@ -27,19 +27,19 @@ public class ShelfPosition {
         this.positionId = positionId;
     }
 
-    public boolean getisDeleted() {
-        return isDeleted;
+    public boolean getDeleted() {
+        return Deleted;
     }
 
-    public void setisDeleted(boolean deleted) {
-        this.isDeleted = deleted;
+    public void setDeleted(boolean deleted) {
+        this.Deleted = deleted;
     }
 
-    public boolean getisOccupied() {
-        return isOccupied;
+    public boolean getOccupied() {
+        return Occupied;
     }
 
-    public void setisOccupied(boolean occupied) {
-        this.isOccupied = occupied;
+    public void setOccupied(boolean occupied) {
+        this.Occupied = occupied;
     }
 }

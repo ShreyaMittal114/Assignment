@@ -12,7 +12,7 @@ import java.util.Map;
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-    @ExceptionHandler({DeviceNotFound.class,IllegalArgumentException.class, NullPointerException.class})
+    @ExceptionHandler({DeviceNotFound.class,IllegalArgumentException.class, NullPointerException.class, ShelfOperationException.class, ShelfNotFound.class})
     public ResponseEntity<Map<String, String>> handleex(Exception exception){
         Map<String, String> errorResponse = new HashMap<>() ;
         errorResponse.put("message",exception.getMessage());

@@ -29,7 +29,8 @@ public class DeviceRepo {
                 partNumber: $partNumber,
                 buildingName: $buildingName,
                 deviceType: $deviceType,
-                noOfShelfPositions: $noOfShelfPositions
+                noOfShelfPositions: $noOfShelfPositions,
+                Deleted :false
             })
             RETURN elementId(d) AS nodeId
         """;
@@ -43,6 +44,7 @@ public class DeviceRepo {
                         "buildingName", device.getBuildingName(),
                         "deviceType", device.getDeviceType(),
                         "noOfShelfPositions", device.getNoOfShelfPositions()
+
                 ));
 
                 return result.single().get("nodeId").asString();
@@ -53,7 +55,7 @@ public class DeviceRepo {
     public Device getById(String id) {
         String query = """
                 MATCH(d:Device)
-                WHERE elementId(d)=$id
+                WHERE elementId(d)=$id  AND d.Deleted=false
                 RETURN d
                 """;
 
@@ -84,6 +86,7 @@ public class DeviceRepo {
     public List<Device> getAllDevices() {
         String query = """
                 MATCH(d:Device)
+                WHERE d.Deleted=false
                 RETURN d
                 """;
 
@@ -113,7 +116,7 @@ public class DeviceRepo {
     public String updateDevice(String id, Device device) {
         String query = """
                 MATCH(d:Device)
-                WHERE elementId(d)=$id
+                WHERE elementId(d)=$id  AND d.Deleted=false
                 SET d.name = $name,
                      d.partNumber = $partNumber,
                      d.buildingName= $buildingName,
@@ -200,6 +203,35 @@ public class DeviceRepo {
                 }
 
                 return devices;
+            });
+        }
+    }
+
+    public String deleteDevice(String deviceId) {
+
+        String query = """
+                MATCH (d:Device)
+WHERE elementId(d) = $deviceId
+AND d.isDeleted = false
+ 
+OPTIONAL MATCH (d)-[r1:HAS_ShelfPosition]->(sp:ShelfPosition)
+OPTIONAL MATCH (sp)-[r2:HAS_Shelf]->(s:Shelf)
+ 
+SET d.Deleted = true
+SET sp.Deleted = true
+SET s.Occupied = false
+DELETE r2
+RETURN d""";
+
+
+        try (Session session = driver.session()) {
+            return session.executeWrite(tx -> {
+                Result result = tx.run(query, Values.parameters("deviceId",deviceId));
+                if (!result.hasNext()) {
+                    throw new DeviceNotFound("There is no device with this id");
+                }
+
+                return "device deleted successfully";
             });
         }
     }
