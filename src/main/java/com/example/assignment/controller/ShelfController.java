@@ -46,6 +46,11 @@ public class ShelfController {
         return shelfService.UpdateShelf(id,shelf);
     }
 
+    @DeleteMapping("/{id}")
+    public String delete(@PathVariable String id){
+        return shelfService.deleteShelf(id);
+    }
+
 
 
 }

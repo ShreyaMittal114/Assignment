@@ -176,4 +176,36 @@ RETURN elementId(s) AS shelfId,
 
         }
     }
+
+    public String deleteShelf(String id) {
+
+        String query= """
+                 MATCH(s:Shelf)
+                WHERE s.Deleted=false
+                
+                OPTIONAL MATCH (sp:ShelfPosition)-[r:HAS_SHELF]->(s:Shelf)
+                
+                SET s.Deleted=true
+                SET s.Occupied=false
+                SET sp.Occupied=false
+                
+                DELETE r
+                RETURN s
+                """;
+
+        try (Session session = driver.session()) {
+            return session.executeWrite(tx -> {
+
+                Result result = tx.run(query,
+                        Values.parameters("id", id));
+
+                if (!result.hasNext()) {
+                    throw new ShelfNotFound("No shelf found with this id");
+                }
+
+                return "Shelf deleted successfully";
+            });
+        }
+
+    }
 }

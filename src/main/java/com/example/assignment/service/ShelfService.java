@@ -35,6 +35,10 @@ public class ShelfService {
         return shelfRepo.UpdateShelf(shelfId, shelf);
     }
 
+    public String deleteShelf(String id) {
+        return shelfRepo.deleteShelf(id);
+    }
+
 //    public Shelf getShelfByName(String name) {
 //        return shelfRepo.getByName(name);
 //    }
