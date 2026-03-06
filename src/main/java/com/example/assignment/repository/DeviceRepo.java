@@ -122,8 +122,8 @@ public class DeviceRepo {
                 SET d.name = $name,
                      d.partNumber = $partNumber,
                      d.buildingName= $buildingName,
-                     d.deviceType = $deviceType,
-                     d.noOfShelfPositions = $noOfShelfPositions 
+                     d.deviceType = $deviceType
+                     
                 RETURN d
                 """;
 
@@ -134,8 +134,8 @@ public class DeviceRepo {
                         "name", device.getName(),
                         "partNumber", device.getPartNumber(),
                         "buildingName", device.getBuildingName(),
-                        "deviceType", device.getDeviceType(),
-                        "noOfShelfPositions", device.getNoOfShelfPositions()
+                        "deviceType", device.getDeviceType()
+
                 ));
                 if (!result.hasNext()) {
                     throw new DeviceNotFound("There is no device with this id");
