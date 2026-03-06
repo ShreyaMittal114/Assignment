@@ -6,7 +6,32 @@ public class ShelfPosition {
     boolean Deleted;
     boolean Occupied;
 
-    public ShelfPosition( String positionId, boolean Deleted, boolean Occupied) {
+    private Shelf shelf;
+
+    public boolean isDeleted() {
+        return Deleted;
+    }
+
+    public boolean isOccupied() {
+        return Occupied;
+    }
+
+    public Shelf getShelf() {
+        return shelf;
+    }
+
+    public void setShelf(Shelf shelf) {
+        this.shelf = shelf;
+    }
+
+    public ShelfPosition(String positionId, boolean deleted, boolean occupied, Shelf shelf) {
+        this.positionId = positionId;
+        Deleted = deleted;
+        Occupied = occupied;
+        this.shelf = shelf;
+    }
+
+    public ShelfPosition(String positionId, boolean Deleted, boolean Occupied) {
 
         this.positionId = positionId;
         this.Deleted = Deleted;

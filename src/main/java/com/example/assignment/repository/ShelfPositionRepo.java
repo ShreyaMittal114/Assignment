@@ -6,9 +6,11 @@ import org.neo4j.driver.Driver;
 import org.neo4j.driver.Result;
 import org.neo4j.driver.Session;
 import org.neo4j.driver.Values;
+import org.neo4j.driver.Record;
 import org.neo4j.driver.types.Node;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+
 
 import java.util.ArrayList;
 import java.util.List;
@@ -60,11 +62,13 @@ public class ShelfPositionRepo {
 
     public List<ShelfPosition> getShelvesPositionByDeviceId(String deviceId) {
         String query = """
-        MATCH (d:Device)-[:HAS_ShelfPosition]->(s:ShelfPosition)
+        MATCH (d:Device)-[:HAS_ShelfPosition]->(sp:ShelfPosition)
+        
         WHERE elementId(d) = $deviceId
         AND d.Deleted=false
-        AND s.Deleted = false
-        RETURN s
+        AND sp.Deleted = false
+         OPTIONAL MATCH (sp)-[:HAS_SHELF]->(sh:Shelf)
+        RETURN DISTINCT sh,sp
     """;
 
         try (Session session = driver.session()) {
@@ -78,13 +82,26 @@ public class ShelfPositionRepo {
 
                 while (result.hasNext()) {
 
-                    Node node = result.next().get("s").asNode();
+                    Record record = result.next();
+
+                    Node spNode = record.get("sp").asNode();
 
                     ShelfPosition shelfPosition = new ShelfPosition();
-                    shelfPosition.setPositionId(node.elementId());
+                    shelfPosition.setPositionId(spNode.elementId());
+                    shelfPosition.setOccupied(spNode.get("Occupied").asBoolean());
+                    shelfPosition.setDeleted(spNode.get("Deleted").asBoolean());
 
-                    shelfPosition.setOccupied(node.get("Occupied").asBoolean());
-                    shelfPosition.setDeleted(node.get("Deleted").asBoolean());
+                    // Check if shelf exists
+                    if (!record.get("sh").isNull()) {
+                        Node shelfNode = record.get("sh").asNode();
+
+                        Shelf shelf = new Shelf();
+                        shelf.setId(shelfNode.elementId());
+                        shelf.setName(shelfNode.get("name").asString());
+                        shelf.setPartNumber(shelfNode.get("partNumber").asLong());
+
+                        shelfPosition.setShelf(shelf);
+                    }
 
                     shelfPositions.add(shelfPosition);
                 }

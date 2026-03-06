@@ -182,7 +182,7 @@ RETURN elementId(s) AS shelfId,
 
         String query= """
                  MATCH(s:Shelf)
-                WHERE s.Deleted=false
+                WHERE  elementId(s)=$id  AND s.Deleted=false
                 
                 OPTIONAL MATCH (sp:ShelfPosition)-[r:HAS_SHELF]->(s:Shelf)
                 
