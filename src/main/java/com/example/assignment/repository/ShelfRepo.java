@@ -103,6 +103,7 @@ RETURN elementId(s) AS shelfId,
                 Node node=record.get("s").asNode();
                 Shelf shelf = new Shelf();
                 shelf.setId(node.elementId());
+                shelf.setPartNumber(node.get("partNumber").asLong());
                 shelf.setName(node.get("name").asString());
                 shelf.setOccupied(node.get("Occupied").asBoolean());
                 shelf.setDeleted(node.get("Deleted").asBoolean());
