@@ -3,7 +3,9 @@ package com.example.assignment.repository;
 import com.example.assignment.Exception.DeviceNotFound;
 import com.example.assignment.Exception.ShelfNotFound;
 import com.example.assignment.Exception.ShelfOperationException;
+import com.example.assignment.model.Device;
 import com.example.assignment.model.Shelf;
+import com.example.assignment.model.ShelfPosition;
 import org.neo4j.driver.Driver;
 import org.neo4j.driver.Record;
 import org.neo4j.driver.Result;
@@ -90,7 +92,9 @@ RETURN elementId(s) AS shelfId,
                 MATCH(s:Shelf)
                 WHERE elementId(s) = $shelfId
                 AND s.Deleted=false
-                RETURN s
+                OPTIONAL MATCH (sp:ShelfPosition)-[:HAS_SHELF]->(s)
+                OPTIONAL MATCH (d:Device)-[:HAS_ShelfPosition]->(sp)
+                RETURN s,sp,d
                 """;
 
         try(Session session = driver.session()){
@@ -101,13 +105,42 @@ RETURN elementId(s) AS shelfId,
                 }
                 Record record= result.single();
                 Node node=record.get("s").asNode();
+
                 Shelf shelf = new Shelf();
                 shelf.setId(node.elementId());
                 shelf.setPartNumber(node.get("partNumber").asLong());
                 shelf.setName(node.get("name").asString());
                 shelf.setOccupied(node.get("Occupied").asBoolean());
                 shelf.setDeleted(node.get("Deleted").asBoolean());
+
+                // Shelf Position
+                if(!record.get("sp").isNull()){
+
+                    Node spNode = record.get("sp").asNode();
+
+                    ShelfPosition sp = new ShelfPosition();
+                    sp.setPositionId(spNode.elementId());
+                    sp.setOccupied(spNode.get("Occupied").asBoolean());
+                    sp.setDeleted(spNode.get("Deleted").asBoolean());
+
+                    shelf.setShelfPosition(sp);
+                }
+
+                // Device
+                if(!record.get("d").isNull()){
+
+                    Node deviceNode = record.get("d").asNode();
+
+                    Device device = new Device();
+                    device.setId(deviceNode.elementId());
+                    device.setName(deviceNode.get("name").asString());
+
+                    shelf.setDevice(device);
+                }
+
                 return shelf;
+
+
             });
         }
     }
