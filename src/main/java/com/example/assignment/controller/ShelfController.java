@@ -41,6 +41,12 @@ public class ShelfController {
 
     }
 
+    @DeleteMapping("/remove-shelf/{shelfId}")
+    public String removeShelf(@PathVariable String shelfId){
+        return shelfService.removeShelf(shelfId);
+    }
+
+
     @PutMapping("/{id}/update")
     public String UpdateShelf(@PathVariable String id,@RequestBody Shelf shelf){
         return shelfService.UpdateShelf(id,shelf);

@@ -39,6 +39,10 @@ public class ShelfService {
         return shelfRepo.deleteShelf(id);
     }
 
+    public String removeShelf(String shelfId) {
+        return shelfRepo.removeShelf(shelfId);
+    }
+
 //    public Shelf getShelfByName(String name) {
 //        return shelfRepo.getByName(name);
 //    }

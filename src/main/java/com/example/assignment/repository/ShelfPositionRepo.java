@@ -91,7 +91,7 @@ public class ShelfPositionRepo {
                     shelfPosition.setOccupied(spNode.get("Occupied").asBoolean());
                     shelfPosition.setDeleted(spNode.get("Deleted").asBoolean());
 
-                    // Check if shelf exists
+                    // Checking  if shelf exists
                     if (!record.get("sh").isNull()) {
                         Node shelfNode = record.get("sh").asNode();
 
